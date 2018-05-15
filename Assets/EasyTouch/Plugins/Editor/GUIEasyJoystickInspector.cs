@@ -11,7 +11,7 @@ public class GUIEasyJoystickInspector : Editor{
 	public GUIEasyJoystickInspector(){
 
 		paddingStyle1 = new GUIStyle();
-		paddingStyle1.padding = new RectOffset(15,0,0,0);
+		//paddingStyle1.padding = new RectOffset(15,0,0,0);
 	}
 	
 	void OnEnable(){

@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJoystickMove(MovingJoystick move)
     {
-        if(move.joystickName != "new joystick")
+        if(move.joystickName != "direction")
         {
             return;
         }
@@ -41,12 +41,15 @@ public class PlayerMovement : MonoBehaviour
         float PositionY = move.joystickAxis.y;
 
         
-
         if (PositionX != 0 || PositionY != 0)
         {
-            transform.LookAt(new Vector3(transform.position.x + PositionX, transform.position.y, transform.position.z + PositionY));
+            //transform.LookAt(new Vector3(transform.position.x + PositionX, transform.position.y, transform.position.z + PositionY));
 
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            movement.Set(PositionX, 0f, PositionY);
+
+            movement = movement.normalized * speed * Time.deltaTime;//normalized为了保证每个方向（包括斜着移动）速度一样
+
+            playerRigidbody.MovePosition(transform.position + movement);
 
             anim.SetBool("IsWalking", true);//设置Animator中的IsWalking参数
         }
@@ -58,9 +61,9 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJoystickMoveEnd(MovingJoystick move)
     {
-        if(move.joystickName.Equals("new joystick"))
+        if(move.joystickName.Equals("direction"))
         {
-
+            anim.SetBool("IsWalking", false);//设置Animator中的IsWalking参数
         }
     }
 
